@@ -1,10 +1,9 @@
 import telebot
 
-# Укажите токен, 
-# который вы получили от @Botfather при создании бот-аккаунта:
 bot = telebot.TeleBot(token='8090276111:AAHuaYQUFDVstlIzRZDprilF_9uBfzLmMwo')
-# Укажите id своего аккаунта в Telegram:
-chat_id = 742006215
-message = 'Вам телеграмма!'
-# Вызываем метод send_message, с помощью этого метода отправляются сообщения:
-bot.send_message(chat_id, message)
+
+@bot.message_handler(content_types=['text'])
+def say_hi(message):
+    chat = message.chat
+    chat_id = chat.id
+    bot.send_message(chat_id= chat_id, text='Привет, я KittyBot!')
