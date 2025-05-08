@@ -13,7 +13,8 @@ bot = TeleBot(token=secret_token)
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    level=logging.INFO)
+    level=logging.INFO,
+    filename='kittybot.log',)
 
 URL = 'https://api.thecatapi.com/v1/images/search'
 
