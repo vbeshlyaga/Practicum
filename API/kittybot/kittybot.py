@@ -1,13 +1,19 @@
+import logging
 import requests
 import os
+
 from telebot import TeleBot, types
 from dotenv import load_dotenv
 
 
 load_dotenv()
+
 secret_token = os.getenv('TOKEN')
 bot = TeleBot(token=secret_token)
 
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO)
 
 URL = 'https://api.thecatapi.com/v1/images/search'
 
@@ -16,7 +22,7 @@ def get_new_image():
     try:
         response = requests.get(URL)
     except Exception as error:
-        print(error)
+        logging.error(f'Ошибка при запросе к основному API: {error}')
         new_url='https://api.thedogapi.com/v1/images/search'
         response = requests.get(new_url)
 
@@ -48,7 +54,7 @@ def say_hi(message):
     bot.send_message(chat_id= chat_id, text='Привет, я KittyBot!')
 
 def main():
-    bot.polling()
+    bot.polling(none_stop=True)
 
 if __name__ == '__main__':
     main()
