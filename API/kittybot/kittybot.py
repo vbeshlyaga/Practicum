@@ -1,4 +1,4 @@
-import requests,os 
+import requests, os
 from telebot import TeleBot, types
 from dotenv import load_dotenv
 
@@ -9,7 +9,14 @@ bot = TeleBot(token=secret_token)
 URL = 'https://api.thecatapi.com/v1/images/search'
 
 def get_new_image():
-    response = requests.get(URL).json()
+    try:
+        response = requests.get(URL)
+    except Exception as error:
+        print(error)
+        new_url='https://api.thedogapi.com/v1/images/search'
+        response = requests.get(new_url)
+
+    response = response.json()
     random_cat = response[0].get('url')
     return random_cat
 
@@ -25,13 +32,10 @@ def wake_up(message):
     name = message.chat.first_name
 
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    keyboard.row(types.KeyboardButton('Который час?'),
-                  types.KeyboardButton('Определи мой IP'))
-    keyboard.row(types.KeyboardButton('/random_digit'))
     button_newcat = types.KeyboardButton('/newcat')
     keyboard.add(button_newcat)
 
-    bot.send_message(chat_id=chat.id, text=f'Удаляю клавиатуру!!!!!!!', reply_markup=types.ReplyKeyboardRemove())
+    bot.send_message(chat_id=chat.id, text=f'Привет {name}! Сейчас отправлю милое фото!', reply_markup=keyboard)
     bot.send_photo(chat.id, get_new_image())
 
 @bot.message_handler(content_types=['text'])
