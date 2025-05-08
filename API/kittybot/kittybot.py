@@ -28,7 +28,7 @@ def wake_up(message):
     button_newcat = types.KeyboardButton('/newcat')
     keyboard.add(button_newcat)
 
-    bot.send_message(chat_id=chat.id, text=f'Привет, {name}! Я пришлю тебе котика!', reply_markup=keyboard)
+    bot.send_message(chat_id=chat.id, text=f'Удаляю клавиатуру!!!!!!!', reply_markup=types.ReplyKeyboardRemove())
     bot.send_photo(chat.id, get_new_image())
 
 @bot.message_handler(content_types=['text'])
