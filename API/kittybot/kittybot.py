@@ -1,4 +1,5 @@
-import requests, os
+import requests
+import os
 from telebot import TeleBot, types
 from dotenv import load_dotenv
 
@@ -6,7 +7,10 @@ from dotenv import load_dotenv
 load_dotenv()
 secret_token = os.getenv('TOKEN')
 bot = TeleBot(token=secret_token)
+
+
 URL = 'https://api.thecatapi.com/v1/images/search'
+
 
 def get_new_image():
     try:
@@ -30,7 +34,6 @@ def new_cat(message):
 def wake_up(message):
     chat = message.chat
     name = message.chat.first_name
-
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     button_newcat = types.KeyboardButton('/newcat')
     keyboard.add(button_newcat)
@@ -44,5 +47,8 @@ def say_hi(message):
     chat_id = chat.id
     bot.send_message(chat_id= chat_id, text='Привет, я KittyBot!')
 
+def main():
+    bot.polling()
 
-bot.polling()
+if __name__ == '__main__':
+    main()
