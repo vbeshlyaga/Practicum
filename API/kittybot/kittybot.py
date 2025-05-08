@@ -8,4 +8,10 @@ def say_hi(message):
     chat_id = chat.id
     bot.send_message(chat_id= chat_id, text='Привет, я KittyBot!')
 
+@bot.message_handler(commands=['start'])
+def wake_up(message):
+    chat = message.chat
+    chat_id = chat.id
+    bot.send_message(chat_id= chat_id, text='Спасибо, что включили меня!')
+
 bot.polling()
