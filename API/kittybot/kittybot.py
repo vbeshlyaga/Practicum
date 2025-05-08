@@ -1,6 +1,7 @@
 import requests
 from telebot import TeleBot, types
 
+
 bot = TeleBot(token='8090276111:AAHuaYQUFDVstlIzRZDprilF_9uBfzLmMwo')
 URL = 'https://api.thecatapi.com/v1/images/search'
 
@@ -20,7 +21,14 @@ def wake_up(message):
     chat = message.chat
     name = message.chat.first_name
 
-    bot.send_message(chat_id=chat.id, text=f'Привет, {name}! Я пришлю тебе котика!')
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    keyboard.row(types.KeyboardButton('Который час?'),
+                  types.KeyboardButton('Определи мой IP'))
+    keyboard.row(types.KeyboardButton('/random_digit'))
+    button_newcat = types.KeyboardButton('/newcat')
+    keyboard.add(button_newcat)
+
+    bot.send_message(chat_id=chat.id, text=f'Привет, {name}! Я пришлю тебе котика!', reply_markup=keyboard)
     bot.send_photo(chat.id, get_new_image())
 
 @bot.message_handler(content_types=['text'])
