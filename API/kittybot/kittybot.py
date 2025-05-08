@@ -1,8 +1,11 @@
-import requests
+import requests,os 
 from telebot import TeleBot, types
+from dotenv import load_dotenv
 
 
-bot = TeleBot(token='8090276111:AAHuaYQUFDVstlIzRZDprilF_9uBfzLmMwo')
+load_dotenv()
+secret_token = os.getenv('TOKEN')
+bot = TeleBot(token=secret_token)
 URL = 'https://api.thecatapi.com/v1/images/search'
 
 def get_new_image():
